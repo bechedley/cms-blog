@@ -1,7 +1,6 @@
 const User = require("./User");
 const Post = require("./Post");
 const Comment = require("./Comment");
-const PostComment = require("./PostComment");
 
 // User can own many posts
 User.hasMany(Post, {
@@ -25,31 +24,19 @@ Comment.belongsTo(User, {
   foreignKey: "user_id",
 });
 
-// Posts belongsToMany Comment
-Post.belongsToMany(Comment, {
-  // Define the third table needed to store the foreign keys
-  through: {
-    model: PostComment,
-    unique: false,
-  },
-  // Define an alias for when data is retrieved
-  as: "related_comments",
-});
-
-// Comments belongsToMany Posts
-Comment.belongsToMany(Post, {
-  // Define the third table needed to store the foreign keys
-  through: {
-    model: PostComment,
-    unique: false,
-  },
-  // Define an alias for when data is retrieved
-  as: "commented_posts",
-});
+// Post can have many comments
+Post.hasMany(Comment, {
+    foreignKey: "post_id",
+    onDelete: "CASCADE"
+  }); 
+  
+  // Comment belongsTo post
+  Comment.belongsTo(Post, {
+    foreignKey: "post_id",
+  });
 
 module.exports = {
   Post,
   User,
   Comment,
-  PostComment,
 };
