@@ -1,0 +1,23 @@
+.nav-blue {
+    background-color: #187bcd;
+    margin-bottom: 30px;
+    padding: 10px;
+}
+
+.btn {
+    color: #0f4979;
+}
+
+.auth-btn {
+    background-color: #187bcd;
+    color: white;
+    margin: 10px;
+}
+
+.content {
+    padding: 20px;
+}
+
+.blog-card {
+    margin: 20px;
+}
