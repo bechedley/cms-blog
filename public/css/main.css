@@ -18,6 +18,18 @@
     text-transform: uppercase;
 }
 
+.btn-danger {
+    color: white;
+}
+
+.btn-secondary {
+    color: white;
+}
+
+.btn-primary {
+    color: white;
+}
+
 .content {
     padding: 20px;
 }
@@ -77,4 +89,16 @@
 #comment-date {
     text-transform: uppercase;
     padding-left: 10px;
+}
+
+#btn-post-delete {
+    color: red;
+}
+
+#btn-comment-delete {
+    color: red;
+}
+
+form label {
+    font-weight: bold;
 }
