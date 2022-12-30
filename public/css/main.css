@@ -14,10 +14,67 @@
     margin: 10px;
 }
 
+.btn-add-comment {
+    text-transform: uppercase;
+}
+
 .content {
     padding: 20px;
 }
 
 .blog-card {
     margin: 20px;
+}
+
+
+.post-page {
+    padding: 20px;
+}
+
+.divider {
+    margin: 30px;
+}
+
+.comments-top {
+    padding-bottom: 20px;
+}
+
+.comment-transform {
+    color: #187bcd;
+}
+
+.comment-info {
+    padding-bottom: 0px;
+    border-bottom: none;
+}
+
+#post-title {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #187bcd;
+}
+
+#post-username {
+    text-align: center;
+    font-style: italic;
+}
+
+#post-date {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#post-text {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#comments-heading {
+    font-weight: bold;
+}
+
+#comment-date {
+    text-transform: uppercase;
+    padding-left: 10px;
 }
