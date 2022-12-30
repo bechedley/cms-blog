@@ -30,7 +30,8 @@ router.get("/", async (req, res) => {
     // Pass serialized data and session flag into template
     res.render('homepage', { 
         posts, 
-        logged_in: req.session.logged_in
+        logged_in: req.session.logged_in,
+        userCurrent: req.session.user_id,
       });
     } catch (err) {
       res.status(500).json(err);
@@ -59,7 +60,8 @@ router.get("/homepage", async (req, res) => {
     // Pass serialized data and session flag into template
     res.render('homepage', { 
         posts, 
-        logged_in: req.session.logged_in 
+        logged_in: req.session.logged_in,
+        userCurrent: req.session.user_id,
       });
     } catch (err) {
       res.status(500).json(err);
@@ -85,7 +87,8 @@ router.get('/post/:id', async (req, res) => {
 
         res.render('post', {
             ...post,
-            logged_in: req.session.logged_in
+            logged_in: req.session.logged_in,
+            userCurrent: req.session.user_id,
         });
     } catch (err) {
         res.status(500).json(err);
@@ -104,7 +107,8 @@ router.get('/dashboard', withAuth, async (req, res) => {
   
       res.render('dashboard', {
         ...user,
-        logged_in: true
+        logged_in: true,
+        userCurrent: req.session.user_id,
       });
     } catch (err) {
       res.status(500).json(err);
@@ -123,7 +127,8 @@ router.get('/post', withAuth, async (req, res) => {
   
       res.render('post', {
         ...user,
-        logged_in: true
+        logged_in: true,
+        userCurrent: req.session.user_id,
       });
     } catch (err) {
       res.status(500).json(err);

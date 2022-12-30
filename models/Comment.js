@@ -38,6 +38,9 @@ Comment.init(
                 unique: false,
             },
         },
+        is_commentOwner: {
+            type: DataTypes.INTEGER,
+        },
     },
     {
         sequelize,

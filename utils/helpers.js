@@ -1,3 +1,4 @@
+
 module.exports = {
     format_date: (date) => {
         return `${new Date(date).getMonth() + 1}/${new Date(date).getDate()}/${new Date(date).getFullYear()
@@ -8,19 +9,12 @@ module.exports = {
         return `${text.toUpperCase()}`;
     },
 
-    // ifCommentEdit: (data) => {
-
-    //     if (data == req.session.user_id) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // },
-
-    if_owner: (req, data) => {
-        if (req.session.username == data) {
+    eq: (a, b) => {
+        let v1 = a;
+        let v2 = b;
+        if (v1 == v2) {
             return true;
         }
-    }
+    },
 
 };

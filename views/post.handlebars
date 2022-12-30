@@ -2,12 +2,13 @@
 </div>
 <div class="post-page">
 
+{{#if (eq user_id userCurrent)}}
     <div class="post-transform d-flex col-auto justify-content-right" data-id="{{id}}" data-owner="{{user_id}}" data-currentUser="{{user.id}}">
         <button type="button" data-bs-toggle="modal" data-bs-target="#editPostModal" class="btn"
             id="btn-post-edit">EDIT</button><button type="button" class="btn delete-post-btn" data-bs-toggle="modal"
             data-bs-target="#postDeleteModal" id="btn-post-delete">DELETE</button>
     </div>
-
+{{/if}}
 
     <div>
         <h1 id="post-title">{{post_title}}</h1>
@@ -19,8 +20,10 @@
         <div span class="border-top divider"></span></div>
         <div class="comments-top d-flex justify-content-between align-items-center">
             <h5 id="comments-heading">COMMENTS</h5>
+            {{#if logged_in}}
             <button class="btn btn-primary btn-add-comment" type="button" data-bs-toggle="modal"
                 data-bs-target="#addCommentModal" id="add-comment">Add Comment</button>
+                {{/if}}
         </div>
     </div>
     <div data-pid="{{id}}">
@@ -31,12 +34,12 @@
                     <h6 id="comment-username">{{commentor_id}}</h6>
                     <h6 id="comment-date">{{ format_date comment_created}}</h6>
                 </div>
-                {{!-- {{#if (ifCommentEdit comment.user_id)}} --}}
+                    {{#if (eq commentor_id ../userCurrent)}}
                 <div class="d-flex col-auto justify-content-right comment-transform align-items-center"><button
                         class="btn" type="button" data-bs-toggle="modal" data-bs-target="#editCommentModal"
                         id="btn-comment-edit">EDIT</button><button class="btn" id="btn-comment-delete"
                         data-cid="{{id}}">DELETE</button></div>
-                {{!-- {{/if}} --}}
+                {{/if}}
             </div>
             <div class="card-body">
                 {{comment_text}}

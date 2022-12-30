@@ -101,6 +101,7 @@ router.get("/comment", async (req, res) => {
   res.render('post', { 
       comments, 
       logged_in: req.session.logged_in,
+      userCurrent: req.session.user_id
 
     });
   } catch (err) {
@@ -124,7 +125,7 @@ router.get('/comment/:id', async (req, res) => {
       res.render('post', {
           ...comment,
           logged_in: req.session.logged_in,
-          owner: req.session.user_name
+          userCurrent: req.session.user_id
       });
   } catch (err) {
       res.status(500).json(err);
