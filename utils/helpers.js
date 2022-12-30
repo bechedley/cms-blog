@@ -1,5 +1,3 @@
-const { User } = require("../models");
-
 module.exports = {
     format_date: (date) => {
         return `${new Date(date).getMonth() + 1}/${new Date(date).getDate()}/${new Date(date).getFullYear()
@@ -10,33 +8,18 @@ module.exports = {
         return `${text.toUpperCase()}`;
     },
 
-    format_author: (data) => {
+    // ifCommentEdit: (data) => {
 
-        if (data == User.id) {
-        return User.username;
-    }},
+    //     if (data == req.session.user_id) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // },
 
-    format_commentor: (data) => {
-
-        if (data == userData.id) {
-        return User.username;
-    }},
-
-    ifCommentEdit: (data) => {
-
-        if (data == userData.id) {
+    if_owner: (req, data) => {
+        if (req.session.username == data) {
             return true;
-        } else {
-            return false;
-        }
-    },
-
-    ifPostEdit: (data) => {
-
-        if (data == userData.id) {
-            return true;
-        } else {
-            return false;
         }
     }
 

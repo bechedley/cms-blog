@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   Post,
   Comment,
+  User
 } = require("../../models");
 const withAuth = require("../../utils/auth");
 
@@ -73,13 +74,70 @@ router.put("/:id/text", withAuth, async (req, res) => {
   }
 });
 
+router.get("/comment", async (req, res) => {
+  try {
+      // Get all posts and JOIN with user data
+      const commentData = await Comment.findAll({
+        where: {
+          post_id: req.params.id
+        },
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ['password'] },
+
+          },
+          {
+            model: Post,
+        },
+        ],
+        order: [["comment_created", "ASC"]],
+  });
+
+  // Serialize data so the template can read it
+  const comments = commentData.map((comment) => comment.get({ plain: true }));
+
+  // Pass serialized data and session flag into template
+  res.render('post', { 
+      comments, 
+      logged_in: req.session.logged_in,
+
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/comment/:id', async (req, res) => {
+  try {
+      const commentData = await Comment.findByPk(req.params.id, {
+          include: [
+              {
+                  model: User,
+                  attributes: { exclude: ['password'] },
+              },
+          ],
+      });
+
+      const comment = commentData.get({ plain: true });
+
+      res.render('post', {
+          ...comment,
+          logged_in: req.session.logged_in,
+          owner: req.session.user_name
+      });
+  } catch (err) {
+      res.status(500).json(err);
+  }
+});
+
 // Route that adds a new comment to the specified project
-router.post("/:id/comment", withAuth, async (req, res) => {
+router.post("/:pid/:id/comment", withAuth, async (req, res) => {
   try {
     const newComment = await Comment.create({
         ...req.body,
         post_id: req.params.id,
-        user_id: req.session.user_id,
+        commentor_id: req.session.user_id,
       });
 
     res.status(200).json(newComment);
@@ -94,7 +152,7 @@ router.delete("/:pid/comment/:cid", withAuth, async (req, res) => {
     const commentData = await Comment.destroy({
       where: {
         id: req.params.cid,
-        user_id: req.session.user_id
+        commentor_id: req.session.user_id
       },
     });
 
@@ -115,7 +173,8 @@ router.put("/:pid/comment/:cid", withAuth, async (req, res) => {
     const commentData = await Comment.update(req.body, {
         where: {
           id: req.params.cid,
-          user_id: req.session.user_id
+          commentor_id: req.session.user_id,
+          post_id: req.params.pid
         },
       });
 

@@ -85,6 +85,10 @@
     color: black;
 }
 
+.comment-card {
+    margin: 10px;
+}
+
 #post-title {
     margin-bottom: 20px;
     text-align: center;
