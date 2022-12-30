@@ -13,10 +13,15 @@ router.get("/", (req, res) => {
     return;
   }
 
-  res.redirect("/login");
+  res.redirect("/homepage");
 });
 
-router.get("/homepage", withAuth, async (req, res) => {
+router.get("/login", (req, res) => {
+    res.redirect("/login");
+    return;
+  });
+
+router.get("/homepage", async (req, res) => {
   try {
 
     const postData = await Post.findAll({
