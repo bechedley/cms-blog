@@ -8,10 +8,32 @@
     color: #0f4979;
 }
 
+.btn-add {
+    margin: 10px;
+    margin-left: 20px;
+}
+
 .auth-btn {
     background-color: #187bcd;
     color: white;
     margin: 10px;
+}
+
+.btn-add-comment {
+    text-transform: uppercase;
+}
+
+.btn-danger {
+    color: white;
+}
+
+.btn-secondary {
+    color: white;
+}
+
+.btn-primary {
+    color: white;
+    background-color: #187bcd;
 }
 
 .content {
@@ -20,4 +42,73 @@
 
 .blog-card {
     margin: 20px;
+}
+
+
+.post-page {
+    padding: 20px;
+}
+
+.divider {
+    margin: 30px;
+}
+
+.comments-top {
+    padding-bottom: 20px;
+}
+
+.comment-transform {
+    color: #187bcd;
+}
+
+.comment-info {
+    padding-bottom: 0px;
+    border-bottom: none;
+}
+
+.dashboard-posts {
+    margin-top:20px;
+}
+
+#post-title {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #187bcd;
+}
+
+#post-username {
+    text-align: center;
+    font-style: italic;
+}
+
+#post-date {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#post-text {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#comments-heading {
+    font-weight: bold;
+}
+
+#comment-date {
+    text-transform: uppercase;
+    padding-left: 10px;
+}
+
+#btn-post-delete {
+    color: red;
+}
+
+#btn-comment-delete {
+    color: red;
+}
+
+form label {
+    font-weight: bold;
 }
