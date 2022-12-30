@@ -81,6 +81,10 @@
     padding-right: 15px;
 }
 
+.post-card-link {
+    color: black;
+}
+
 #post-title {
     margin-bottom: 20px;
     text-align: center;

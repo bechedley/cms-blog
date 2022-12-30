@@ -32,6 +32,8 @@ router.put("/:id/title", withAuth, async (req, res) => {
     const postData = await Post.update(req.body, {
       where: {
         id: req.params.id,
+        user_id: req.session.user_id
+        
       },
     });
 
@@ -54,6 +56,7 @@ router.put("/:id/text", withAuth, async (req, res) => {
     const postData = await Post.update(req.body, {
       where: {
         id: req.params.id,
+        user_id: req.session.user_id
       },
     });
 
@@ -91,6 +94,7 @@ router.delete("/:pid/comment/:cid", withAuth, async (req, res) => {
     const commentData = await Comment.destroy({
       where: {
         id: req.params.cid,
+        user_id: req.session.user_id
       },
     });
 
@@ -111,6 +115,7 @@ router.put("/:pid/comment/:cid", withAuth, async (req, res) => {
     const commentData = await Comment.update(req.body, {
         where: {
           id: req.params.cid,
+          user_id: req.session.user_id
         },
       });
 
