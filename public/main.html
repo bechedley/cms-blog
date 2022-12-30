@@ -20,6 +20,7 @@
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                {{#if logged_in}}
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -30,140 +31,10 @@
                         <button id="logout" class="btn btn-light my-2 my-sm-0" type="submit">LOG OUT</button>
                     </form>
                 </div>
+                {{/if}}
             </div>
         </nav>
-        <div class="post-page">
-            <div class="post-transform d-flex col-auto justify-content-right">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#editPostModal" class="btn" id="btn-post-edit">EDIT</button><button type="button" class="btn delete-post-btn" data-bs-toggle="modal" data-bs-target="#postDeleteModal"id="btn-post-delete">DELETE</button>
-            </div>
-            <div>
-                <h1 id="post-title">{{post.post_title}}</h1>
-                <h3 id="post-username">By username</h3>
-                <h5 id="post-date">{{ format_date post.post_created}}</h5>
-                <p id="post-text">{{post.post_text}}</p>
-            </div>
-            <div class="comment-section">
-                <div span class="border-top divider"></span></div>
-                <div class="comments-top d-flex justify-content-between align-items-center">
-                    <h5 id="comments-heading">COMMENTS</h5>
-                    <button class="btn btn-outline-primary btn-add-comment" type="button" data-bs-toggle="modal"
-                    data-bs-target="#addCommentModal" id="add-comment">Add Comment</button>
-                </div>
-                    </div>
-                    <div data-pid={{post.id}}>
-                        {{#each post.comment as |comment|}}
-                <div class="card comment-card">
-                    <div class="card-header comment-info d-flex justify-content-between align-items-center">
-                        <div class="d-flex col-auto">
-                            <h6 id="commentor">username</h6>
-                            <h6 id="comment-date">{{ format_date comment.comment_created}}</h6>
-                        </div>
-                        <div class="d-flex col-auto justify-content-right comment-transform align-items-center"><button
-                                class="btn" type="button" data-bs-toggle="modal" data-bs-target="#editCommentModal" id="btn-comment-edit">EDIT</button><button class="btn"
-                                id="btn-comment-delete" data-cid="{{comment.id}}">DELETE</button></div>
-                    </div>
-                    <div class="card-body">
-                        {{comment.comment_text}}
-                    </div>
-                </div>
-                {{/each}}
-                </div>
-            </div>
-        </div>
-
- <!-- Post Delete Confirmation Modal -->
-<form class="form modal fade" id="postDeleteModal" tabindex="-1" role="dialog" aria-labelledby="postDeleteModalLabel"
-aria-hidden="true" data-id="{{post.id}}">
-<div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="postDeleteModalLabel">Are you sure you want to delete this post?</h5>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-danger">Confirm</button>
-        </div>
-    </div>
-</div>
-</form>
-
-<!-- Post Modal -->
-<form class="form modal fade" id="editPostModal" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel"
-    aria-hidden="true" data-id="{{post.id}}">
-    <div class="modal-dialog  modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editPostModalLabel">Edit Your Blog Post</h5>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3">
-                    <div class="col-auto">
-                        <label for="editPostTitle">Blog Post Title:</label>
-                        <input type="text-area" class="form-control-plaintext" rows="1" id="new-title"
-                            value={{post.post_title}}>
-                    </div>
-                    <div class="col-auto">
-                        <label for="editPostText">Post Content:</label>
-                        <input type="text" class="form-control-plaintext" value={{post.post_text}} id="new-post-text">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</form>
-
-<!-- Edit Comment Modal -->
-<form class="form modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="editCommentModalLabel"
-    aria-hidden="true" data-id="{{comment.id}}">
-    <div class="modal-dialog  modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editCommentModalLabel">Edit Your Comment</h5>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3">
-                    <div class="col-auto form-group">
-                        <label for="editCommentText">Comment:</label>
-                        <input type="text" class="form-control" id="edit-comment-text" value={{comment.comment_text}}>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer form-group">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </div>
-</form>
-
-<!-- Add Comment Modal -->
-<form class="form modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="addCommentModalLabel"
-    aria-hidden="true" data-id="{{comment.id}}">
-    <div class="modal-dialog  modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addCommentModalLabel">Add Your Comment</h5>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3">
-                    <div class="col-auto form-group">
-                        <label for="addCommentText">Comment:</label>
-                        <input type="text" class="form-control" id="new-comment-text">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer form-group">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </div>
-</form>
-
+        
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

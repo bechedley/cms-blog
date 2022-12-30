@@ -8,6 +8,11 @@
     color: #0f4979;
 }
 
+.btn-add {
+    margin: 10px;
+    margin-left: 20px;
+}
+
 .auth-btn {
     background-color: #187bcd;
     color: white;
@@ -28,6 +33,7 @@
 
 .btn-primary {
     color: white;
+    background-color: #187bcd;
 }
 
 .content {
@@ -58,6 +64,10 @@
 .comment-info {
     padding-bottom: 0px;
     border-bottom: none;
+}
+
+.dashboard-posts {
+    margin-top:20px;
 }
 
 #post-title {
