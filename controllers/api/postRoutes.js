@@ -6,13 +6,25 @@ const {
 } = require("../../models");
 const withAuth = require("../../utils/auth");
 
+router.post('/', withAuth, async (req, res) => {
+  try {
+    const newPost = await Post.create({
+      ...req.body,
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(newPost);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 // Route that deletes a specified post
 router.delete("/:id", withAuth, async (req, res) => {
   try {
     const postData = await Post.destroy({
       where: {
         id: req.params.id,
-        user_id: req.session.user_id
       },
     });
 
@@ -138,7 +150,7 @@ router.post("/:id/comment", withAuth, async (req, res) => {
     const newComment = await Comment.create({
       ...req.body,
       post_id: req.params.id,
-      user_id: req.session.user_id,
+      commentor_id: req.session.user_id,
     });
 
     res.status(200).json(newComment);
@@ -152,8 +164,7 @@ router.delete("/:pid/comment/:cid", withAuth, async (req, res) => {
   try {
     const commentData = await Comment.destroy({
       where: {
-        id: req.params.cid,
-        commentor_id: req.session.user_id
+        id: req.params.cid
       },
     });
 

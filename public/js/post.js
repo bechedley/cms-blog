@@ -20,7 +20,7 @@ const postUpdateHandler = async (event) => {
 
     if (response.ok) {
       // If successful, refresh the project page
-      document.location.replace(`/posts/${id}`);
+      document.location.replace(`/post/${id}`);
     } else {
       alert("Error when updating the blog post!");
     }
@@ -66,7 +66,7 @@ const commentAddHandler = async (event) => {
 
     if (response.ok) {
       // If successful, refresh the project page
-      document.location.replace(`/posts/${id}`);
+      document.location.replace(`/post/${id}`);
     } else {
       alert("Error when adding the new comment!");
     }
@@ -82,27 +82,17 @@ const commentDeleteHandler = async (event) => {
     const cid = event.target.getAttribute("data-cid");
     const pid = event.target.closest(".post-div").getAttribute("data-pid");
 
-  // Collect values from the name and date modal
-  const comment_text = document.querySelector("#edit-comment-text").value.trim();
-
-  if (comment_text !== null) {
-    // Send a PUT request to the API endpoint
     const response = await fetch(`/api/posts/${pid}/comment/${cid}`, {
-      method: "PUT",
-      body: JSON.stringify({ comment_text }),
-      headers: { "Content-Type": "application/json" },
+      method: "DELETE",
     });
 
     if (response.ok) {
-      // If successful, refresh the project page
-      document.location.replace(`/posts/${id}`);
+      document.location.replace(`/post/${pid}`);
     } else {
-      alert("Error when updating the blog post!");
+      alert("Failed to delete comment");
     }
-  } else {
-    alert("You must include a post title and text!");
   }
-}};
+};
 
 const commentUpdateHandler = async (event) => {
 
@@ -122,10 +112,10 @@ const commentUpdateHandler = async (event) => {
   }
 };
 
-const post_comments = document.querySelectorAll(".comment-delete");
-for (let i = 0; i < post_comments.length; i++) {
-  post_comments[i].addEventListener("click", commentDeleteHandler);
-};
+const comments = document.querySelectorAll(".comment-delete");
+for (let i = 0; i < comments.length; i++) {
+  comments[i].addEventListener("click", commentDeleteHandler);
+}
 
 const editCommentModal = document.getElementById('editCommentModal')
 editCommentModal.addEventListener('show.bs.modal', event => {
@@ -135,11 +125,11 @@ editCommentModal.addEventListener('show.bs.modal', event => {
   const commentId = button.getAttribute('data-bs-cid');
   const commentIdText = button.getAttribute('data-bs-ctext');
   // Update the modal's content.
-  const editCommentId = editCommentModal.getAttribute('.data-cid');
-  const modalTextInput = exampleModal.querySelector('#edit-comment-text input');
+  const editCommentId = editCommentModal.querySelector('.edit-comment-id');
+  const editCommentText = editCommentModal.querySelector('#edit-comment-text');
 
   editCommentId.value = commentId
-  modalTextInput.value = commentIdText
+  editCommentText.value = commentIdText
 });
 
 

@@ -89,6 +89,12 @@
     margin: 10px;
 }
 
+.edit-comment-id {
+    font-style: italic;
+    color: lightgrey;
+    margin-top: 0;
+}
+
 #post-title {
     margin-bottom: 20px;
     text-align: center;

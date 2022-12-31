@@ -5,8 +5,7 @@ const {
   User
 } = require("../models");
 const withAuth = require("../utils/auth");
-// const Sequelize = require("sequelize");
-// const Op = Sequelize.Op;
+
 
 router.get("/", async (req, res) => {
     try {
@@ -115,25 +114,25 @@ router.get('/dashboard', withAuth, async (req, res) => {
     }
 });
 
-router.get('/post', withAuth, async (req, res) => {
-  try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-        attributes: { exclude: ['password'] },
-        include: [{ model: Post }, { model: Comment }],
-      });
+// router.get('/post', withAuth, async (req, res) => {
+//   try {
+//     // Find the logged in user based on the session ID
+//     const userData = await User.findByPk(req.session.user_id, {
+//         attributes: { exclude: ['password'] },
+//         include: [{ model: Post }, { model: Comment }],
+//       });
   
-      const user = userData.get({ plain: true });
+//       const user = userData.get({ plain: true });
   
-      res.render('post', {
-        ...user,
-        logged_in: true,
-        userCurrent: req.session.user_id,
-      });
-    } catch (err) {
-      res.status(500).json(err);
-    }
-});
+//       res.render('post', {
+//         ...user,
+//         logged_in: true,
+//         userCurrent: req.session.user_id,
+//       });
+//     } catch (err) {
+//       res.status(500).json(err);
+//     }
+// });
 
   router.get('/login', (req, res) => {
     // If the user is already logged in, redirect the request to another route
@@ -144,19 +143,5 @@ router.get('/post', withAuth, async (req, res) => {
   
     res.render('login');
   });
-
-  // Route that adds a new post
-router.post("/", withAuth, async (req, res) => {
-  try {
-    const newPost = await Post.create({
-      ...req.body,
-      user_id: req.session.user_id,
-    });
-
-    res.status(200).json(newPost);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
 
 module.exports = router;

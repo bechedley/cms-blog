@@ -6,7 +6,7 @@ const newPostFormHandler = async (event) => {
     const post_created = new Date();
   
     if (post_title && post_text) {
-      const response = await fetch(`/`, {
+      const response = await fetch(`/api/posts`, {
         method: 'POST',
         body: JSON.stringify({ post_title, post_text, post_created }),
         headers: {
@@ -24,6 +24,6 @@ const newPostFormHandler = async (event) => {
   
   document
     .querySelector('.add-post-form')
-    .addEventListener('submit', newFormHandler);
+    .addEventListener('submit', newPostFormHandler);
 
   
