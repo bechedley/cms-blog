@@ -3,7 +3,7 @@
 <div class="post-page">
 
 {{#if (eq user_id userCurrent)}}
-    <div class="post-transform d-flex col-auto justify-content-right" data-id="{{id}}" data-owner="{{user_id}}" data-currentUser="{{user.id}}">
+    <div class="post-transform d-flex col-auto justify-content-right post-div" data-id="{{id}}" data-pid="{{id}}" data-owner="{{user_id}}" data-currentUser="{{user.id}}">
         <button type="button" data-bs-toggle="modal" data-bs-target="#editPostModal" class="btn"
             id="btn-post-edit">EDIT</button><button type="button" class="btn delete-post-btn" data-bs-toggle="modal"
             data-bs-target="#postDeleteModal" id="btn-post-delete">DELETE</button>
@@ -36,8 +36,7 @@
                 </div>
                     {{#if (eq commentor_id ../userCurrent)}}
                 <div class="d-flex col-auto justify-content-right comment-transform align-items-center"><button
-                        class="btn" type="button" data-bs-toggle="modal" data-bs-target="#editCommentModal"
-                        id="btn-comment-edit">EDIT</button><button class="btn" id="btn-comment-delete"
+                        class="btn comment-edit" type="button" data-bs-toggle="modal" data-bs-target="#editCommentModal" data-bs-cid="{{id}}" data-bs-ctext="{{comment_text}}" data-cid="{{id}}" id="btn-comment-edit">EDIT</button><button class="btn comment-delete" id="btn-comment-delete"
                         data-cid="{{id}}">DELETE</button></div>
                 {{/if}}
             </div>
@@ -96,9 +95,8 @@
 </form>
 
 <!-- Edit Comment Modal -->
-        {{#each comments as |comment|}}
-<form class="form modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="editCommentModalLabel"
-    aria-hidden="true" data-id="{{comment.id}}">
+<form class="form modal fade editCommentId" id="editCommentModal" tabindex="-1" role="dialog" data-cid=""   aria-labelledby="editCommentModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog  modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -106,9 +104,9 @@
             </div>
             <div class="modal-body">
                 <form class="row g-3">
-                    <div class="col-auto form-group">
+                    <div class="col-auto form-group modal-ctext">
                         <label for="editCommentText">Comment:</label>
-                        <input type="text" class="form-control" id="edit-comment-text" value="{{comment_text}}">
+                        <input type="text" class="form-control" id="edit-comment-text" value="">
                     </div>
                 </form>
             </div>
@@ -119,11 +117,10 @@
         </div>
     </div>
 </form>
-{{/each}}
 
 <!-- Add Comment Modal -->
 <form class="form modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="addCommentModalLabel"
-    aria-hidden="true" data-id="{{comment.id}}">
+    aria-hidden="true" data-id="{{id}}">
     <div class="modal-dialog  modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -133,7 +130,7 @@
                 <form class="row g-3">
                     <div class="col-auto form-group">
                         <label for="addCommentText">Comment:</label>
-                        <input type="text" class="form-control" id="new-comment-text">
+                        <input type="text" class="form-control" id="new-comment-text" placeholder="Your comment here">
                     </div>
                 </form>
             </div>

@@ -111,7 +111,7 @@ router.get("/comment", async (req, res) => {
 
 router.get('/comment/:id', async (req, res) => {
   try {
-      const commentData = await Comment.findByPk(req.params.id, {
+      const existingCommentData = await Comment.findByPk(req.params.id, {
           include: [
               {
                   model: User,
@@ -120,10 +120,10 @@ router.get('/comment/:id', async (req, res) => {
           ],
       });
 
-      const comment = commentData.get({ plain: true });
+      const existingComment = existingCommentData.get({ plain: true });
 
       res.render('post', {
-          ...comment,
+          ...existingComment,
           logged_in: req.session.logged_in,
           userCurrent: req.session.user_id
       });
@@ -133,13 +133,13 @@ router.get('/comment/:id', async (req, res) => {
 });
 
 // Route that adds a new comment to the specified project
-router.post("/:pid/:id/comment", withAuth, async (req, res) => {
+router.post("/:id/comment", withAuth, async (req, res) => {
   try {
     const newComment = await Comment.create({
-        ...req.body,
-        post_id: req.params.id,
-        commentor_id: req.session.user_id,
-      });
+      ...req.body,
+      post_id: req.params.id,
+      user_id: req.session.user_id,
+    });
 
     res.status(200).json(newComment);
   } catch (err) {
@@ -189,20 +189,6 @@ router.put("/:pid/comment/:cid", withAuth, async (req, res) => {
     res.status(200).json(commentData);
   } catch (err) {
     res.status(500).json(err);
-  }
-});
-
-// Route that adds a new post
-router.post("/", withAuth, async (req, res) => {
-  try {
-    const newPost = await Post.create({
-      ...req.body,
-      user_id: req.session.user_id,
-    });
-
-    res.status(200).json(newPost);
-  } catch (err) {
-    res.status(400).json(err);
   }
 });
 
