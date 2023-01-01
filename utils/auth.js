@@ -1,7 +1,7 @@
 // Function that checks with the session to see if the user has logged in 
 const withAuth = (req, res, next) => {
     if (!req.session.logged_in) {
-      res.redirect("/login");
+      res.redirect("/homepage");
     } else {
       next();
     }

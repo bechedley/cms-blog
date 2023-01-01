@@ -1,42 +1,50 @@
+<div class="container-fluid">
+</div>
 <div class="post-page">
-    {{#if (ifPostEdit post.user_id)}}
-    <div class="post-transform d-flex col-auto justify-content-right" data-id="{{post.id}}">
+
+{{#if (eq user_id userCurrent)}}
+    <div class="post-transform d-flex col-auto justify-content-right post-div" data-id="{{id}}" data-pid="{{id}}" data-owner="{{user_id}}" data-currentUser="{{user.id}}" id="{{id}}">
         <button type="button" data-bs-toggle="modal" data-bs-target="#editPostModal" class="btn"
-            id="btn-post-edit">EDIT</button><button type="button" class="btn delete-post-btn" data-bs-toggle="modal"
-            data-bs-target="#postDeleteModal" id="btn-post-delete">DELETE</button>
+            id="btn-post-edit">EDIT</button>
+            <button type="button" class="btn delete-post-btn" data-bs-toggle="modal"
+            data-bs-target="#postDeleteModal" data-id="{{id}}" id="btn-post-delete">DELETE</button>
     </div>
-    {{/if}}
+{{/if}}
+
     <div>
-        <h1 id="post-title">{{post.post_title}}</h1>
-        <h3 id="post-username">By {{ format_author post.user_id}}</h3>
-        <h5 id="post-date">{{ format_date post.post_created}}</h5>
-        <p id="post-text">{{post.post_text}}</p>
+        <h1 id="post-title">{{post_title}}</h1>
+        <h3 id="post-username">By {{user.username}}</h3>
+        <h5 id="post-date">{{ format_date post_created}}</h5>
+        <p id="post-text">{{post_text}}</p>
     </div>
     <div class="comment-section" id="comments">
         <div span class="border-top divider"></span></div>
         <div class="comments-top d-flex justify-content-between align-items-center">
             <h5 id="comments-heading">COMMENTS</h5>
-            <button class="btn btn-outline-primary btn-add-comment" type="button" data-bs-toggle="modal"
+            {{#if logged_in}}
+            <button class="btn btn-primary btn-add-comment" type="button" data-bs-toggle="modal"
                 data-bs-target="#addCommentModal" id="add-comment">Add Comment</button>
+                {{/if}}
         </div>
     </div>
-    <div data-pid="{{post.id}}">
+    <div data-pid="{{id}}">
         {{#each comments as |comment|}}
         <div class="card comment-card" data-pid="{{post.id}}">
             <div class="card-header comment-info d-flex justify-content-between align-items-center">
                 <div class="d-flex col-auto">
-                    <h6 id="commentor">{{ format_commentor comment.user_id}}</h6>
-                    <h6 id="comment-date">{{ format_date comment.comment_created}}</h6>
+                    <h6 id="comment-username">{{comment.[username]}}</h6>
+                    <h6 id="comment-date">{{ format_date comment_created}}</h6>
                 </div>
-                {{#if (ifCommentEdit comment.user_id)}}
+                    {{#if (eq commentor_id ../userCurrent)}}
                 <div class="d-flex col-auto justify-content-right comment-transform align-items-center"><button
-                        class="btn" type="button" data-bs-toggle="modal" data-bs-target="#editCommentModal"
-                        id="btn-comment-edit">EDIT</button><button class="btn" id="btn-comment-delete"
-                        data-cid="{{comment.id}}">DELETE</button></div>
+                        class="btn comment-edit" type="button" data-bs-toggle="modal" data-bs-target="#editCommentModal" data-bs-cindex="{{@index}}"
+                        data-bs-cid="{{id}}" data-bs-ctext="{{comment_text}}"
+                        data-bs-cpid="{{post_id}}"  data-cid="{{id}}" id="btn-comment-edit">EDIT</button><button class="btn comment-delete" id="btn-comment-delete"
+                        data-cid="{{id}}">DELETE</button></div>
                 {{/if}}
             </div>
             <div class="card-body">
-                {{comment.comment_text}}
+                {{comment_text}}
             </div>
         </div>
         {{/each}}
@@ -46,7 +54,7 @@
 
 <!-- Post Delete Confirmation Modal -->
 <form class="form modal fade" id="postDeleteModal" tabindex="-1" role="dialog" aria-labelledby="postDeleteModalLabel"
-    aria-hidden="true" data-id="{{post.id}}">
+    aria-hidden="true" data-id="{{id}}">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -62,7 +70,7 @@
 
 <!-- Post Modal -->
 <form class="form modal fade" id="editPostModal" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel"
-    aria-hidden="true" data-id="{{post.id}}">
+    aria-hidden="true" data-id="{{id}}">
     <div class="modal-dialog  modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -73,11 +81,11 @@
                     <div class="col-auto">
                         <label for="editPostTitle">Blog Post Title:</label>
                         <input type="text-area" class="form-control-plaintext" rows="1" id="new-title"
-                            value="{{post.post_title}}">
+                            value="{{post_title}}">
                     </div>
                     <div class="col-auto">
                         <label for="editPostText">Post Content:</label>
-                        <input type="text" class="form-control-plaintext" value="{{post.post_text}}" id="new-post-text">
+                        <input type="text" class="form-control-plaintext" value="{{post_text}}" id="new-post-text">
                     </div>
                 </form>
             </div>
@@ -90,18 +98,24 @@
 </form>
 
 <!-- Edit Comment Modal -->
-<form class="form modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="editCommentModalLabel"
-    aria-hidden="true" data-id="{{comment.id}}">
+        {{#each comments as |comment|}}
+<form class="form modal fade editCommentId" id="editCommentModal" tabindex="-1" role="dialog" data-cid="{{id}}"   aria-labelledby="editCommentModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog  modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editCommentModalLabel">Edit Your Comment</h5>
             </div>
             <div class="modal-body">
-                <form class="row g-3">
-                    <div class="col-auto form-group">
+                <form class="form-inline" id="editCommentModalForm">
+                    <div class="form-group modal-ctext">
+                        <input type="text" class="form-control-plaintext edit-comment-index d-none" id="edit-comment-cindex" readonly>
+                        <input type="number" class="form-control-plaintext edit-comment-cid d-none" id="edit-comment-cid" readonly>
+                        <input type="number" class="form-control-plaintext edit-comment-cpid d-none" id="edit-comment-cpid" readonly>
+                    </div>
+                    <div class="form-group modal-ctext">
                         <label for="editCommentText">Comment:</label>
-                        <input type="text" class="form-control" id="edit-comment-text" value="{{comment.comment_text}}">
+                        <input type="text" class="form-control edit-comment-text" id="edit-comment-text">
                     </div>
                 </form>
             </div>
@@ -113,9 +127,11 @@
     </div>
 </form>
 
+{{/each}}
+
 <!-- Add Comment Modal -->
 <form class="form modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="addCommentModalLabel"
-    aria-hidden="true" data-id="{{comment.id}}">
+    aria-hidden="true" data-id="{{id}}">
     <div class="modal-dialog  modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -125,7 +141,7 @@
                 <form class="row g-3">
                     <div class="col-auto form-group">
                         <label for="addCommentText">Comment:</label>
-                        <input type="text" class="form-control" id="new-comment-text">
+                        <input type="text" class="form-control" id="new-comment-text" placeholder="Your comment here">
                     </div>
                 </form>
             </div>
@@ -136,3 +152,5 @@
         </div>
     </div>
 </form>
+
+<script src="/js/post.js"></script>

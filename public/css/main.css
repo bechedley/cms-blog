@@ -34,6 +34,7 @@
 .btn-primary {
     color: white;
     background-color: #187bcd;
+    border: #187bcd;
 }
 
 .content {
@@ -68,6 +69,36 @@
 
 .dashboard-posts {
     margin-top:20px;
+}
+
+.post-card {
+    margin: 10px;
+    padding: 5px;
+}
+
+.card-text {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.post-card-link {
+    color: black;
+}
+
+.comment-card {
+    margin: 10px;
+}
+
+.edit-comment-id {
+    font-style: italic;
+    color: lightgrey;
+    margin-top: 0;
+}
+
+.edit-comment-cpid {
+    font-style: italic;
+    color: lightgrey;
+    margin-top: 0;
 }
 
 #post-title {
@@ -111,4 +142,9 @@
 
 form label {
     font-weight: bold;
+}
+
+a {
+    color: white;
+    text-decoration: none;
 }

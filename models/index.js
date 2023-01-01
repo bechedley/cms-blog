@@ -15,13 +15,13 @@ Post.belongsTo(User, {
 
 // User can own many comments
 User.hasMany(Comment, {
-  foreignKey: "user_id",
+  foreignKey: "commentor_id",
   onDelete: "CASCADE"
 }); 
 
 // Comment belongsTo user
 Comment.belongsTo(User, {
-  foreignKey: "user_id",
+  foreignKey: "commentor_id",
 });
 
 // Post can have many comments

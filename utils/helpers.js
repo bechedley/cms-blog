@@ -1,4 +1,3 @@
-const { User } = require("../models");
 
 module.exports = {
     format_date: (date) => {
@@ -10,34 +9,12 @@ module.exports = {
         return `${text.toUpperCase()}`;
     },
 
-    format_author: (data) => {
-
-        if (data == User.id) {
-        return User.username;
-    }},
-
-    format_commentor: (data) => {
-
-        if (data == userData.id) {
-        return User.username;
-    }},
-
-    ifCommentEdit: (data) => {
-
-        if (data == userData.id) {
+    eq: (a, b) => {
+        let v1 = a;
+        let v2 = b;
+        if (v1 == v2) {
             return true;
-        } else {
-            return false;
         }
     },
-
-    ifPostEdit: (data) => {
-
-        if (data == userData.id) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 };
