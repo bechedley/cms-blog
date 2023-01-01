@@ -46,7 +46,7 @@ const commentData = [
   {
     comment_text: "I have some edits to suggest",
     comment_created: '2022-12-04',
-    commentor_id: 5,
+    commentor_id: 3,
     post_id: 5,
   },
 ];

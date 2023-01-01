@@ -34,9 +34,6 @@ Post.init(
                 unique: false,
             },
         },
-        is_postOwner: {
-            type: DataTypes.INTEGER,
-        },
     },
     {
         sequelize,
