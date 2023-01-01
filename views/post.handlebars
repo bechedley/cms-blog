@@ -3,9 +3,10 @@
 <div class="post-page">
 
 {{#if (eq user_id userCurrent)}}
-    <div class="post-transform d-flex col-auto justify-content-right post-div" data-id="{{id}}" data-pid="{{id}}" data-owner="{{user_id}}" data-currentUser="{{user.id}}">
+    <div class="post-transform d-flex col-auto justify-content-right post-div" data-id="{{id}}" data-pid="{{id}}" data-owner="{{user_id}}" data-currentUser="{{user.id}}" id="{{id}}">
         <button type="button" data-bs-toggle="modal" data-bs-target="#editPostModal" class="btn"
-            id="btn-post-edit">EDIT</button><button type="button" class="btn delete-post-btn" data-bs-toggle="modal"
+            id="btn-post-edit">EDIT</button>
+            <button type="button" class="btn delete-post-btn" data-bs-toggle="modal"
             data-bs-target="#postDeleteModal" data-id="{{id}}" id="btn-post-delete">DELETE</button>
     </div>
 {{/if}}
@@ -36,7 +37,9 @@
                 </div>
                     {{#if (eq commentor_id ../userCurrent)}}
                 <div class="d-flex col-auto justify-content-right comment-transform align-items-center"><button
-                        class="btn comment-edit" type="button" data-bs-toggle="modal" data-bs-target="#editCommentModal" data-bs-cid="{{@index}}" data-bs-ctext="{{comment_text}}" data-cid="{{id}}" id="btn-comment-edit">EDIT</button><button class="btn comment-delete" id="btn-comment-delete"
+                        class="btn comment-edit" type="button" data-bs-toggle="modal" data-bs-target="#editCommentModal" data-bs-cindex="{{@index}}"
+                        data-bs-cid="{{id}}" data-bs-ctext="{{comment_text}}"
+                        data-bs-cpid="{{post_id}}"  data-cid="{{id}}" id="btn-comment-edit">EDIT</button><button class="btn comment-delete" id="btn-comment-delete"
                         data-cid="{{id}}">DELETE</button></div>
                 {{/if}}
             </div>
@@ -104,11 +107,13 @@
                 <h5 class="modal-title" id="editCommentModalLabel">Edit Your Comment</h5>
             </div>
             <div class="modal-body">
-                <form class="row g-3" id="editCommentModalForm">
-                    <div class="col-auto form-group modal-ctext">
-                        <input type="number" class="form-control-plaintext edit-comment-id" id="edit-comment-id" readonly>
+                <form class="form-inline" id="editCommentModalForm">
+                    <div class="form-group modal-ctext">
+                        <input type="text" class="form-control-plaintext edit-comment-index d-none" id="edit-comment-cindex" readonly>
+                        <input type="number" class="form-control-plaintext edit-comment-cid d-none" id="edit-comment-cid" readonly>
+                        <input type="number" class="form-control-plaintext edit-comment-cpid d-none" id="edit-comment-cpid" readonly>
                     </div>
-                    <div class="col-auto form-group modal-ctext">
+                    <div class="form-group modal-ctext">
                         <label for="editCommentText">Comment:</label>
                         <input type="text" class="form-control edit-comment-text" id="edit-comment-text">
                     </div>

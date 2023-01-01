@@ -95,6 +95,12 @@
     margin-top: 0;
 }
 
+.edit-comment-cpid {
+    font-style: italic;
+    color: lightgrey;
+    margin-top: 0;
+}
+
 #post-title {
     margin-bottom: 20px;
     text-align: center;

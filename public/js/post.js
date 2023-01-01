@@ -95,21 +95,38 @@ const commentDeleteHandler = async (event) => {
 };
 
 const commentUpdateHandler = async (event) => {
+  event.preventDefault();
+  
+  let pid;
+  let cid;
 
-  if (event.target.hasAttribute("data-cid")) {
-    const cid = event.target.getAttribute("data-cid");
-    const pid = event.target.closest(".post-div").getAttribute("data-pid");
-
-    const response = await fetch(`/api/posts/${pid}/comment/${cid}`, {
-      method: "UPDATE",
-    });
-
-    if (response.ok) {
-      document.location.replace(`/posts/${pid}`);
-    } else {
-      alert("Failed to delete collaborator");
-    }
+  if (event.target.hasAttribute("id")) {
+    cid = event.target.querySelector("#edit-comment-cid").value;
+    pid = event.target.querySelector("#edit-comment-cpid").value;
   }
+
+// Collect values from the comment modal
+const comment_text = document.querySelector("#edit-comment-text").value.trim();
+
+console.log(cid, pid, comment_text);
+
+if (comment_text !== null) {
+  // Send a PUT request to the API endpoint
+  const response = await fetch(`/api/posts/${pid}/comment/${cid}/text`, {
+    method: "PUT",
+    body: JSON.stringify({ comment_text }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (response.ok) {
+    // If successful, refresh the project page
+    document.location.replace(`/post/${pid}`);
+  } else {
+    alert("Error when updating the comment!");
+  }
+} else {
+  alert("You must include text in your comment!");
+}
 };
 
 const comments = document.querySelectorAll(".comment-delete");
@@ -122,14 +139,20 @@ editCommentModal.addEventListener('show.bs.modal', event => {
   // Button that triggered the modal
   const button = event.relatedTarget
   // Extract info from data-bs-* attributes
-  const commentId = button.getAttribute('data-bs-cid');
-  const commentIdText = button.getAttribute('data-bs-ctext');
+  let commentIndex = button.getAttribute('data-bs-cindex');
+  let commentId = button.getAttribute('data-bs-cid');
+  let commentIdText = button.getAttribute('data-bs-ctext');
+  let commentPostId = button.getAttribute('data-bs-cpid');
   // Update the modal's content.
-  const editCommentId = editCommentModal.querySelector('.edit-comment-id');
+  const editCommentIndex = editCommentModal.querySelector('#edit-comment-cindex');
+  const editCommentId = editCommentModal.querySelector('#edit-comment-cid');
   const editCommentText = editCommentModal.querySelector('#edit-comment-text');
+  const editCpid = editCommentModal.querySelector('#edit-comment-cpid');
 
+  editCommentIndex.value = commentIndex
   editCommentId.value = commentId
   editCommentText.value = commentIdText
+  editCpid.value = commentPostId
 });
 
 

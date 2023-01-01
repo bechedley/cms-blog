@@ -46,7 +46,6 @@ router.put("/:id/title", withAuth, async (req, res) => {
       where: {
         id: req.params.id,
         user_id: req.session.user_id
-        
       },
     });
 
@@ -180,17 +179,17 @@ router.delete("/:pid/comment/:cid", withAuth, async (req, res) => {
 });
 
 // Route that updates the comment of a project
-router.put("/:pid/comment/:cid", withAuth, async (req, res) => {
+router.put("/:pid/comment/:cid/text", withAuth, async (req, res) => {
   try {
     const commentData = await Comment.update(req.body, {
         where: {
           id: req.params.cid,
-          commentor_id: req.session.user_id,
-          post_id: req.params.pid
+          post_id: req.params.pid,
+          commentor_id: req.session.user_id
         },
       });
 
-    if (!commentData) {
+    if (!commentData[0]) {
       res
         .status(404)
         .json({ message: "Error when trying to update the comment!" });
