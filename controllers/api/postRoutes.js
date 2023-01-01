@@ -95,7 +95,7 @@ router.get("/comment", async (req, res) => {
         include: [
           {
             model: User,
-            attributes: { exclude: ['password'] },
+            attributes: { exclude: ['password'] }
 
           },
           {
@@ -185,7 +185,7 @@ router.put("/:pid/comment/:cid/text", withAuth, async (req, res) => {
         where: {
           id: req.params.cid,
           post_id: req.params.pid,
-          commentor_id: req.session.user_id
+          commentor_id: req.session.username
         },
       });
 
