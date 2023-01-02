@@ -23,10 +23,10 @@ Comment.init(
             defaultValue: DataTypes.NOW,
         },
         commentor_id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             references: {
                 model: "user",
-                key: "id",
+                key: "username",
                 unique: false,
             },
         },
