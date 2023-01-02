@@ -135,6 +135,9 @@ for (let i = 0; i < comments.length; i++) {
 }
 
 const editCommentModal = document.getElementById('editCommentModal')
+
+if (editCommentModal) {
+
 editCommentModal.addEventListener('show.bs.modal', event => {
   // Button that triggered the modal
   const button = event.relatedTarget
@@ -153,10 +156,12 @@ editCommentModal.addEventListener('show.bs.modal', event => {
   editCommentId.value = commentId
   editCommentText.value = commentIdText
   editCpid.value = commentPostId
+
 });
 
-
 editCommentModal.addEventListener("submit", commentUpdateHandler);
+
+};
 
 document
   .querySelector("#postDeleteModal")
