@@ -30,7 +30,8 @@ router.get("/", async (req, res) => {
     res.render('homepage', {
       posts,
       logged_in: req.session.logged_in,
-      userCurrent: req.session.user_id,
+      userCurrent: req.session.username,
+      userCurrentId: req.session.user_id
     });
   } catch (err) {
     res.status(500).json(err);
@@ -60,7 +61,8 @@ router.get("/homepage", async (req, res) => {
     res.render('homepage', {
       posts,
       logged_in: req.session.logged_in,
-      userCurrent: req.session.user_id,
+      userCurrent: req.session.username,
+      userCurrentId: req.session.user_id
     });
   } catch (err) {
     res.status(500).json(err);
@@ -87,7 +89,8 @@ router.get('/post/:id', async (req, res) => {
     res.render('post', {
       ...post,
       logged_in: req.session.logged_in,
-      userCurrent: req.session.user_id,
+      userCurrent: req.session.username,
+      userCurrentId: req.session.user_id
     });
   } catch (err) {
     res.status(500).json(err);
@@ -107,7 +110,8 @@ router.get('/dashboard', withAuth, async (req, res) => {
     res.render('dashboard', {
       ...user,
       logged_in: true,
-      userCurrent: req.session.user_id,
+      userCurrent: req.session.username,
+      userCurrentId: req.session.user_id
     });
   } catch (err) {
     res.status(500).json(err);

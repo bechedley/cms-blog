@@ -45,7 +45,7 @@ router.put("/:id/title", withAuth, async (req, res) => {
     const postData = await Post.update(req.body, {
       where: {
         id: req.params.id,
-        user_id: req.session.user_id
+        user_id: req.session.user_id,
       },
     });
 
@@ -68,7 +68,7 @@ router.put("/:id/text", withAuth, async (req, res) => {
     const postData = await Post.update(req.body, {
       where: {
         id: req.params.id,
-        user_id: req.session.user_id
+        user_id: req.session.user_id,
       },
     });
 
@@ -112,7 +112,8 @@ router.get("/comment", async (req, res) => {
   res.render('post', { 
       comments, 
       logged_in: req.session.logged_in,
-      userCurrent: req.session.user_id
+      userCurrent: req.session.username,
+      userCurrentId: req.session.user_id
 
     });
   } catch (err) {
@@ -136,7 +137,8 @@ router.get('/comment/:id', async (req, res) => {
       res.render('post', {
           ...existingComment,
           logged_in: req.session.logged_in,
-          userCurrent: req.session.user_id
+          userCurrent: req.session.username,
+          userCurrentId: req.session.user_id
       });
   } catch (err) {
       res.status(500).json(err);
@@ -149,7 +151,7 @@ router.post("/:id/comment", withAuth, async (req, res) => {
     const newComment = await Comment.create({
       ...req.body,
       post_id: req.params.id,
-      commentor_id: req.session.user_id,
+      commentor_id: req.session.username,
     });
 
     res.status(200).json(newComment);
@@ -185,7 +187,7 @@ router.put("/:pid/comment/:cid/text", withAuth, async (req, res) => {
         where: {
           id: req.params.cid,
           post_id: req.params.pid,
-          commentor_id: req.session.username
+          commentor_id: req.session.username,
         },
       });
 

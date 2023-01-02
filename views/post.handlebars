@@ -2,7 +2,7 @@
 </div>
 <div class="post-page">
 
-{{#if (eq user_id userCurrent)}}
+{{#if (eq user.username userCurrent)}}
     <div class="post-transform d-flex col-auto justify-content-right post-div" data-id="{{id}}" data-pid="{{id}}" data-owner="{{user_id}}" data-currentUser="{{user.id}}" id="{{id}}">
         <button type="button" data-bs-toggle="modal" data-bs-target="#editPostModal" class="btn"
             id="btn-post-edit">EDIT</button>
