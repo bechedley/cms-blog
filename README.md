@@ -12,7 +12,7 @@ N/A
 
 Open the webpage to view the CMS Blog app. Existing blog posts will appear on the home page. Log into the app to access the dashboard, with a list of your own blog posts. Click into a blog post to view the post content and any comments. You can add, edit or delete your own comments with the relevant buttons. If the blog post is your own, you can also edit or delete the post.
 
-Link to deployed app: (https://bechedley-cms-blog.herokuapp.com/)
+Link to deployed app: (https://bechedley-blog.herokuapp.com/)
 
 ![Screenshot of app](./public/images/cms-blog-screenshot.png)
 
