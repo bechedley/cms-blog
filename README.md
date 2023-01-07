@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository is where I create code for a CMS-style blog app.
+This repository is where I create code for a CMS-style blog app where users can add, edit and delete own posts and comments, as well as view posts and comments by other users.
 
 ## Installation
 
